@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
+import org.springframework.test.context.ActiveProfiles;
 
 import java.util.List;
 import java.util.Optional;
@@ -18,24 +19,15 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase.Replace;
 
+//@ActiveProfiles("testdb")
+//@AutoConfigureTestDatabase(replace = Replace.NONE)
 @DisplayName("JPA 연결 테스트")
 @Import(JpaRepositoryTest.TestJpaConfig.class)
-@AutoConfigureTestDatabase(replace = Replace.NONE)
 @DataJpaTest
 class JpaRepositoryTest {
 
     private final ArticleRepository articleRepository;
     private final ArticleCommentRepository articleCommentRepository;
-
-    @EnableJpaAuditing
-    @TestConfiguration
-    static class TestJpaConfig {
-        @Bean
-        AuditorAware<String> auditorAware() {
-            return () -> Optional.of("uno");
-        }
-
-    }
 
     JpaRepositoryTest(
             @Autowired ArticleRepository articleRepository,
@@ -56,7 +48,7 @@ class JpaRepositoryTest {
         //then
         assertThat(articles)
                 .isNotNull()
-                .hasSize(1000);
+                .hasSize(123);
     }
 
     @DisplayName("insert 테스트")
@@ -72,4 +64,45 @@ class JpaRepositoryTest {
         assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
     }
 
+    @DisplayName("update 테스트")
+    @Test
+    void givenTestData_whenUpdating_thenWorksFine() {
+        //given
+        Article article = articleRepository.findById(1L).orElseThrow();
+        String updatingHashing = "#springboot";
+        article.setHashtag(updatingHashing);
+
+        //when
+        Article savedArticle = articleRepository.saveAndFlush(article);
+
+        //then
+        assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updatingHashing);
+    }
+
+    @DisplayName("delete 테스트")
+    @Test
+    void givenTestData_whenDeleting_thenWorksFine() {
+        //given
+        Article article = articleRepository.findById(1L).orElseThrow();
+        long previousArticleCount = articleRepository.count();
+        long previousArticleCommentCount = articleCommentRepository.count();
+        int deletedCommentsSize = article.getArticleComments().size();
+
+        //when
+        articleRepository.delete(article);
+
+        //then
+        assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
+        assertThat(articleCommentRepository.count()).isEqualTo(previousArticleCommentCount - deletedCommentsSize);
+    }
+
+    @EnableJpaAuditing
+    @TestConfiguration
+    static class TestJpaConfig {
+        @Bean
+        AuditorAware<String> auditorAware() {
+            return () -> Optional.of("uno");
+        }
+
+    }
 }

@@ -13,6 +13,7 @@ spring:
     username: uno
     password: thisisTESTpw!#%&
     driver-class-name: com.mysql.cj.jdbc.Driver
+
   jpa:
     defer-datasource-initialization: true
     hibernate.ddl-auto: create
@@ -25,5 +26,10 @@ spring:
 
 ---
 
-spring:
-  config.activate.on-profile: test
+#spring:
+#  config.activate.on-profile: testdb
+#  datasource:
+#    url: jdbc:h2:mem:boardcamp;mode=mysql
+#    driverClassName: org.h2.Driver
+#  sql.init.mode: always
+#  test.database.replace: none
