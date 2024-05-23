@@ -29,6 +29,6 @@ public class ArticleController {
         map.addAttribute("article", "article"); //TODO 나중에 구현해야함
         map.addAttribute("articleComments", List.of());
 
-        return "articles/index";
+        return "articles/detail";
     }
 }
