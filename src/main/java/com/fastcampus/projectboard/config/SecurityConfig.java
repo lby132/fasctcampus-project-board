@@ -12,8 +12,10 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth.anyRequest().permitAll())
-                .formLogin(formLogin ->
-                        formLogin.loginPage("/login").permitAll()
-                ).build();
+                .formLogin().and().build();
+//                .formLogin(formLogin ->
+//                        formLogin.loginPage("/login").permitAll()
+//                ).build();
     }
+
 }
