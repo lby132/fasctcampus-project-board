@@ -3,6 +3,7 @@ package com.fastcampus.projectboard.service;
 import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.type.SearchType;
 import com.fastcampus.projectboard.dto.ArticleDto;
+import com.fastcampus.projectboard.dto.ArticleUpdateDto;
 import com.fastcampus.projectboard.repository.ArticleRepository;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
@@ -74,7 +75,7 @@ class ArticleServiceTest {
         given(articleRepository.save(any(Article.class))).willReturn(any(Article.class));
 
         //when
-        sut.saveArticle(ArticleDto.of(LocalDateTime.now(), "Coco", "title", "content", "#java"));
+        sut.updateArticle(1L, ArticleUpdateDto.of("title", "content", "#java"));
 
         //then
         then(articleRepository).should().save(any(Article.class));
