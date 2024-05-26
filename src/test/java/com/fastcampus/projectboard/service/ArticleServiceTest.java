@@ -81,4 +81,17 @@ class ArticleServiceTest {
         then(articleRepository).should().save(any(Article.class));
     }
 
+    @DisplayName("게시글의 ID를 입력하면, 게시글을 삭제한다")
+    @Test
+    void givenArticleId_whenDeletingArticle_thenDeletesArticle() {
+        //given
+        willDoNothing().given(articleRepository).delete(any(Article.class));
+
+        //when
+        sut.deleteArticle(1L);
+
+        //then
+        then(articleRepository).should().delete(any(Article.class));
+    }
+
 }
