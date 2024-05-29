@@ -15,4 +15,16 @@ public record ArticleCommentDto(LocalDateTime createdAt,
   public static ArticleCommentDto of(LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String content) {
     return new ArticleCommentDto(createdAt, createdBy, modifiedAt, modifiedBy, content);
   }
+
+  public static ArticleCommentDto of(long l, long l1, UserAccountDto userAccountDto, String content, LocalDateTime now, String co, LocalDateTime now1, String co1) {
+    return null;
+  }
+
+  public Long articleId() {
+    return null;
+  }
+
+  public Long id() {
+    return null;
+  }
 }

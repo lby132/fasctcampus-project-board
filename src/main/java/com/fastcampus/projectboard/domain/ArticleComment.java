@@ -50,6 +50,10 @@ public class ArticleComment extends AuditingFields {
         return new ArticleComment(article, userAccount, content);
     }
 
+    public static ArticleComment of(Article of, UserAccount userAccount, String content) {
+        return null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

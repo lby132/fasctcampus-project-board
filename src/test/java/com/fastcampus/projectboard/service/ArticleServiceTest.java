@@ -4,7 +4,6 @@ import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.UserAccount;
 import com.fastcampus.projectboard.domain.type.SearchType;
 import com.fastcampus.projectboard.dto.ArticleDto;
-import com.fastcampus.projectboard.dto.ArticleUpdateDto;
 import com.fastcampus.projectboard.dto.ArticleWithCommentsDto;
 import com.fastcampus.projectboard.dto.UserAccountDto;
 import com.fastcampus.projectboard.repository.ArticleRepository;
@@ -18,11 +17,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.rest.webmvc.ResourceNotFoundException;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
-import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.catchThrowable;
@@ -39,19 +36,36 @@ class ArticleServiceTest {
     @Mock
     private ArticleRepository articleRepository;
 
-    @DisplayName("게시글을 검색하면, 게시글 리스트를 반환한다.")
+    @DisplayName("검색어 없이 게시글을 검색하면, 게시글 페이지를 반환한다.")
     @Test
-    void givenSearchParameters_whenSearchingArticles_thenReturnsArticleList() {
+    void givenNoSearchParameters_whenSearchingArticles_thenReturnsArticlePage() {
         //given
         Pageable pageable = Pageable.ofSize(20);
         given(articleRepository.findAll(pageable)).willReturn(Page.empty());
 
         //when
-        Page<ArticleDto> articles = sut.searchArticles(null, "search keyword", pageable);
+        Page<ArticleDto> articles = sut.searchArticles(null, null, pageable);
 
         //then
         assertThat(articles).isNotNull();
         then(articleRepository).should().findAll(pageable);
+    }
+
+    @DisplayName("검색어와 함께 게시글을 검색하면, 게시글 페이지를 반환한다.")
+    @Test
+    void givenSearchParameters_whenSearchingArticles_thenReturnsArticlePage() {
+        //given
+        SearchType searchType = SearchType.TITLE;
+        String searchKeyword = "title";
+        Pageable pageable = Pageable.ofSize(20);
+        given(articleRepository.findByTitleContaining(searchKeyword, pageable)).willReturn(Page.empty());
+
+        //when
+        Page<ArticleDto> articles = sut.searchArticles(searchType, searchKeyword, pageable);
+
+        //then
+        assertThat(articles).isEmpty();
+        then(articleRepository).should().findByTitleContaining(searchKeyword, pageable);
     }
 
     @DisplayName("게시글을 조회하면, 게시글 반환한다.")
@@ -69,7 +83,7 @@ class ArticleServiceTest {
         assertThat(dto)
                 .hasFieldOrPropertyWithValue("title", article.getTitle())
                 .hasFieldOrPropertyWithValue("content", article.getContent())
-                .hasFieldOrPropertyWithValue("hashtagDtos", article.getHashtag());
+                .hasFieldOrPropertyWithValue("hashtag", article.getHashtag());
         then(articleRepository).should().findById(articleId);
     }
 
@@ -91,15 +105,15 @@ class ArticleServiceTest {
     }
 
     @Disabled
-    @DisplayName("게시글을 정보를 입력하면, 게시글을 생성한다")
+    @DisplayName("게시글을 정보를 입력하면, 게시글을 생성한다.")
     @Test
     void givenArticleInfo_whenSavingArticle_thenSavesArticle() {
         //given
-        Article dto = createArticle();
+        ArticleDto dto = createArticleDto();
         given(articleRepository.save(any(Article.class))).willReturn(createArticle());
 
         //when
-//        sut.saveArticle(dto);
+        sut.saveArticle(dto);
 
         //then
         then(articleRepository).should().save(any(Article.class));
@@ -142,9 +156,8 @@ class ArticleServiceTest {
     @Test
     void givenArticleId_whenDeletingArticle_thenDeletesArticle() {
         //given
-        willDoNothing().given(articleRepository).delete(any(Article.class));
         Long articleId = 1L;
-        willDoNothing().given(articleRepository).getReferenceById(articleId);
+        willDoNothing().given(articleRepository).deleteById(articleId);
 
         //when
         sut.deleteArticle(1L);
@@ -170,6 +183,10 @@ class ArticleServiceTest {
                 "content",
                 "#java"
         );
+    }
+
+    private ArticleDto createArticleDto() {
+        return createArticleDto("title", "content", "#java");
     }
 
     private ArticleDto createArticleDto(String title, String content, String hashtag) {
