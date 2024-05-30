@@ -104,7 +104,6 @@ class ArticleServiceTest {
         then(articleRepository).should().findById(articleId);
     }
 
-    @Disabled
     @DisplayName("게시글을 정보를 입력하면, 게시글을 생성한다.")
     @Test
     void givenArticleInfo_whenSavingArticle_thenSavesArticle() {

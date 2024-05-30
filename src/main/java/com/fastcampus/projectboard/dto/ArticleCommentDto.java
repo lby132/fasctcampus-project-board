@@ -1,30 +1,57 @@
 package com.fastcampus.projectboard.dto;
 
+import com.fastcampus.projectboard.domain.Article;
+import com.fastcampus.projectboard.domain.ArticleComment;
+import com.fastcampus.projectboard.domain.UserAccount;
+import lombok.Getter;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * DTO for {@link com.fastcampus.projectboard.domain.ArticleComment}
  */
-public record ArticleCommentDto(LocalDateTime createdAt,
-                                String createdBy,
-                                LocalDateTime modifiedAt,
-                                String modifiedBy,
-                                String content) {
+public record ArticleCommentDto(
+        Long id,
+        Long articleId,
+        UserAccountDto userAccountDto,
+        String content,
+        LocalDateTime createdAt,
+        String createdBy,
+        LocalDateTime modifiedAt,
+        String modifiedBy
+) {
 
-  public static ArticleCommentDto of(LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy, String content) {
-    return new ArticleCommentDto(createdAt, createdBy, modifiedAt, modifiedBy, content);
-  }
+//    public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
+//        return ArticleCommentDto.of(articleId, userAccountDto, null, content);
+//    }
 
-  public static ArticleCommentDto of(long l, long l1, UserAccountDto userAccountDto, String content, LocalDateTime now, String co, LocalDateTime now1, String co1) {
-    return null;
-  }
+    public static ArticleCommentDto of(Long articleId, UserAccountDto userAccountDto, String content) {
+        return ArticleCommentDto.of(null, articleId, userAccountDto, content, null, null, null, null);
+    }
 
-  public Long articleId() {
-    return null;
-  }
+    public static ArticleCommentDto of(Long id, Long articleId, UserAccountDto userAccountDto, String content, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new ArticleCommentDto(id, articleId, userAccountDto, content, createdAt, createdBy, modifiedAt, modifiedBy);
+    }
 
-  public Long id() {
-    return null;
-  }
+    public static ArticleCommentDto from(ArticleComment entity) {
+        return new ArticleCommentDto(
+                entity.getId(),
+                entity.getArticle().getId(),
+                UserAccountDto.from(entity.getUserAccount()),
+                entity.getContent(),
+                entity.getCreatedAt(),
+                entity.getCreatedBy(),
+                entity.getModifiedAt(),
+                entity.getModifiedBy()
+        );
+    }
+
+    public ArticleComment toEntity(Article article, UserAccount userAccount) {
+        return ArticleComment.of(
+                article,
+                userAccount,
+                content
+        );
+    }
 }
