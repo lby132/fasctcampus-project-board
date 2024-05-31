@@ -1,11 +1,14 @@
 package com.fastcampus.projectboard.dto;
 
 import com.fastcampus.projectboard.domain.Article;
+import com.fastcampus.projectboard.domain.ArticleComment;
+import com.fastcampus.projectboard.domain.UserAccount;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public record ArticleWithCommentsDto(
         Long id,
@@ -38,6 +41,14 @@ public record ArticleWithCommentsDto(
                 entity.getCreatedBy(),
                 entity.getModifiedAt(),
                 entity.getModifiedBy()
+        );
+    }
+
+    public ArticleComment toEntity(Article article, UserAccount userAccount) {
+        return ArticleComment.of(
+                article,
+                userAccount,
+                content
         );
     }
 }
