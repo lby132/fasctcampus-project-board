@@ -1,19 +1,16 @@
 package com.fastcampus.projectboard.dto;
 
 import com.fastcampus.projectboard.domain.Article;
-import com.fastcampus.projectboard.domain.ArticleComment;
-import com.fastcampus.projectboard.domain.UserAccount;
 
 import java.time.LocalDateTime;
 import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public record ArticleWithCommentsDto(
         Long id,
         UserAccountDto userAccountDto,
-        Set<ArticleCommentDto> articleCommentDtoSet,
+        Set<ArticleCommentDto> articleCommentDtos,
         String title,
         String content,
         String hashtag,
@@ -22,9 +19,8 @@ public record ArticleWithCommentsDto(
         LocalDateTime modifiedAt,
         String modifiedBy
 ) {
-
-    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtoSet, String title, String content, String hashtag, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
-        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtoSet, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
+    public static ArticleWithCommentsDto of(Long id, UserAccountDto userAccountDto, Set<ArticleCommentDto> articleCommentDtos, String title, String content, String hashtag, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
+        return new ArticleWithCommentsDto(id, userAccountDto, articleCommentDtos, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
     }
 
     public static ArticleWithCommentsDto from(Article entity) {
@@ -44,11 +40,4 @@ public record ArticleWithCommentsDto(
         );
     }
 
-    public ArticleComment toEntity(Article article, UserAccount userAccount) {
-        return ArticleComment.of(
-                article,
-                userAccount,
-                content
-        );
-    }
 }

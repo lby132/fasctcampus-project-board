@@ -1,9 +1,8 @@
 package com.fastcampus.projectboard.controller;
 
 import com.fastcampus.projectboard.domain.type.SearchType;
-import com.fastcampus.projectboard.dto.ArticleResponse;
-import com.fastcampus.projectboard.dto.ArticleWithCommentsDto;
-import com.fastcampus.projectboard.dto.ArticleWithCommentsResponse;
+import com.fastcampus.projectboard.dto.response.ArticleResponse;
+import com.fastcampus.projectboard.dto.response.ArticleWithCommentsResponse;
 import com.fastcampus.projectboard.service.ArticleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -16,8 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
-import java.util.List;
 
 /**
  * /articles

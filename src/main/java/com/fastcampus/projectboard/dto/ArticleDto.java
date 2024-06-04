@@ -1,14 +1,9 @@
 package com.fastcampus.projectboard.dto;
 
 import com.fastcampus.projectboard.domain.Article;
-import com.fastcampus.projectboard.domain.UserAccount;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * DTO for {@link com.fastcampus.projectboard.domain.Article}
- */
 public record ArticleDto(
         Long id,
         UserAccountDto userAccountDto,
@@ -18,12 +13,11 @@ public record ArticleDto(
         LocalDateTime createdAt,
         String createdBy,
         LocalDateTime modifiedAt,
-        String modifiedBy) {
-
+        String modifiedBy
+) {
     public static ArticleDto of(Long id, UserAccountDto userAccountDto, String title, String content, String hashtag, LocalDateTime createdAt, String createdBy, LocalDateTime modifiedAt, String modifiedBy) {
         return new ArticleDto(id, userAccountDto, title, content, hashtag, createdAt, createdBy, modifiedAt, modifiedBy);
     }
-
 
     public static ArticleDto from(Article entity) {
         return new ArticleDto(
@@ -47,4 +41,5 @@ public record ArticleDto(
                 hashtag
         );
     }
+
 }

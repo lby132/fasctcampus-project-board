@@ -1,7 +1,8 @@
-package com.fastcampus.projectboard.dto;
+package com.fastcampus.projectboard.dto.response;
 
-import com.fastcampus.projectboard.domain.Article;
+import com.fastcampus.projectboard.dto.ArticleDto;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 public record ArticleResponse(
@@ -12,7 +13,7 @@ public record ArticleResponse(
         LocalDateTime createdAt,
         String email,
         String nickname
-) {
+) implements Serializable {
 
     public static ArticleResponse of(Long id, String title, String content, String hashtag, LocalDateTime createdAt, String email, String nickname) {
         return new ArticleResponse(id, title, content, hashtag, createdAt, email, nickname);
@@ -34,4 +35,5 @@ public record ArticleResponse(
                 nickname
         );
     }
+
 }
