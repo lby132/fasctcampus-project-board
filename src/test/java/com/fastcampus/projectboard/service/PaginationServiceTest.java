@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.params.provider.Arguments.*;
 
 @DisplayName("비즈니스 로직 - 페이지네이션")
@@ -31,12 +30,12 @@ class PaginationServiceTest {
     @DisplayName("현재 페이지 번호와 총 페이지 수를 주면, 페이징 바 리스트를 만들어 준다.")
     @MethodSource // @ParameterizedTest 과 같이 사용하면 메서드 스타일로 파라미터를 여러개 받을 수 있다.
                 //  givenCurrentPageNumberAndTotalPages_whenCalculating_thenReturnsPaginationBarNumbers static 메서드 처럼.
-    @ParameterizedTest
+    @ParameterizedTest(name = "[{index} 현재 페이지: {0}, 총 페이지: {1} ==> {2}]")
     void givenCurrentPageNumberAndTotalPages_whenCalculating_thenReturnsPaginationBarNumbers(int currentPageNumber, int totalPages, List<Integer> expected) throws Exception {
         //given
 
         //when
-        List<Integer> actual = sut.getPaginationNumber(currentPageNumber, totalPages);
+        List<Integer> actual = sut.getPaginationBarNumbers(currentPageNumber, totalPages);
 
         //then
         assertThat(actual).isEqualTo(expected);
