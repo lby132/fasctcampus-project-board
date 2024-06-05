@@ -34,20 +34,21 @@ public class ArticleController {
     private final PaginationService paginationService;
 
     @GetMapping
-    public String article(
+    public String articles(
             @RequestParam(required = false) SearchType searchType,
             @RequestParam(required = false) String searchValue,
             @PageableDefault(size = 10, sort = "createdAt", direction = Sort.Direction.DESC) Pageable pageable,
-            ModelMap map) {
-
+            ModelMap map
+    ) {
         Page<ArticleResponse> articles = articleService.searchArticles(searchType, searchValue, pageable).map(ArticleResponse::from);
         List<Integer> barNumbers = paginationService.getPaginationBarNumbers(pageable.getPageNumber(), articles.getTotalPages());
 
         map.addAttribute("articles", articles);
-        map.addAttribute("barNumbers", barNumbers);
+        map.addAttribute("paginationBarNumbers", barNumbers);
 
         return "articles/index";
     }
+
 
     @GetMapping("/{articleId}")
     public String article(@PathVariable Long articleId, ModelMap map) {
