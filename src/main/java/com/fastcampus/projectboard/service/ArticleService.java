@@ -77,6 +77,6 @@ public class ArticleService {
     }
 
     public List<String> getHashtags() {
-        return null;
+        return articleRepository.findAllDistinctHashtags();
     }
 }
