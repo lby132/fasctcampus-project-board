@@ -6,6 +6,7 @@ import com.fastcampus.projectboard.dto.request.ArticleRequest;
 import com.fastcampus.projectboard.service.ArticleCommentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -17,8 +18,14 @@ public class ArticleCommentController {
     private final ArticleCommentService articleCommentService;
 
     @PostMapping("/new")
-    public String postNewArticle(ArticleCommentRequest articleRequest) {
+    public String postNewArticle(ArticleCommentRequest articleCommentRequest) {
 
-        return "redirect:/articles";
+        return "redirect:/articles/" + articleCommentRequest.articleId();
+    }
+
+    @PostMapping("/{commentId}/delete")
+    public String deleteArticleComment(@PathVariable Long commentId) {
+
+        return "redirect:/articles/" + commentId;
     }
 }
