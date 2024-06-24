@@ -31,6 +31,6 @@ public class ArticleCommentController {
     public String deleteArticleComment(@PathVariable Long commentId, Long articleId) {
         articleCommentService.deleteArticleComment(commentId);
 
-        return "redirect:/articles/" + commentId;
+        return "redirect:/articles/" + articleId;
     }
 }

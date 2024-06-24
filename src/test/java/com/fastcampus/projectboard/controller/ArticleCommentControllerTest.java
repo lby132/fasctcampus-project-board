@@ -13,11 +13,9 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultMatcher;
 
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.then;
 import static org.mockito.BDDMockito.willDoNothing;
@@ -74,7 +72,7 @@ class ArticleCommentControllerTest {
 
         // when & then
         mvc.perform(
-                        post("/comments/" + articleId + "/delete")
+                        post("/comments/" + articleCommentId + "/delete")
                                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
                                 .content(formDataEncoder.encode(Map.of("articleId", articleId)))
                                 .with(csrf())
@@ -82,6 +80,7 @@ class ArticleCommentControllerTest {
                 .andExpect(status().is3xxRedirection())
                 .andExpect(view().name("redirect:/articles/" + articleId))
                 .andExpect(redirectedUrl("/articles/" + articleId));
+
         then(articleCommentService).should().deleteArticleComment(articleCommentId);
     }
 

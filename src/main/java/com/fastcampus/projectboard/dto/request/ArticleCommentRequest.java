@@ -6,7 +6,7 @@ import com.fastcampus.projectboard.dto.UserAccountDto;
 public record ArticleCommentRequest(Long articleId, String content) {
 
     public static ArticleCommentRequest of(Long articleId, String content) {
-        return ArticleCommentRequest.of(articleId, content);
+        return new ArticleCommentRequest(articleId, content);
     }
 
     public ArticleCommentDto toDto(UserAccountDto userAccountDto) {
