@@ -34,8 +34,13 @@ public class SecurityConfig {
                         ).permitAll()
                         .anyRequest().permitAll()
                 )
-                .formLogin(formLogin ->
-                        formLogin.loginPage("/login").permitAll()
+                .formLogin(formLogin -> formLogin
+                        .loginPage("/login")
+                        .permitAll()
+                )
+                .logout((logout) -> logout
+                        .logoutSuccessUrl("/")
+                        .permitAll()
                 ).build();
     }
 
