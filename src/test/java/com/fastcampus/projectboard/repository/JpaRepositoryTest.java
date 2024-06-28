@@ -106,6 +106,5 @@ class JpaRepositoryTest {
         AuditorAware<String> auditorAware() {
             return () -> Optional.of("uno");
         }
-
     }
 }
