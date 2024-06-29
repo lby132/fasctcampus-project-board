@@ -3,7 +3,6 @@ package com.fastcampus.projectboard.repository;
 import com.fastcampus.projectboard.domain.Article;
 import com.fastcampus.projectboard.domain.QArticle;
 import com.fastcampus.projectboard.repository.querydsl.ArticleRepositoryCustom;
-import com.fastcampus.projectboard.repository.querydsl.ArticleRepositoryCustomImpl;
 import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import org.springframework.data.domain.Page;
@@ -26,6 +25,8 @@ public interface ArticleRepository extends
     Page<Article> findByUserAccount_UserIdContaining(String userId, Pageable pageable);
     Page<Article> findByUserAccount_NicknameContaining(String nickname, Pageable pageable);
     Page<Article> findByHashtag(String hashtag, Pageable pageable);
+
+    void deleteByIdAndUserAccount_UserId(Long articleId, String userId);
 
     @Override
     default void customize(QuerydslBindings bindings, QArticle root) {
