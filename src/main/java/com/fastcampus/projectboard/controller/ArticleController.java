@@ -15,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
@@ -56,6 +57,7 @@ public class ArticleController {
     public String article(@PathVariable Long articleId, ModelMap map) {
         ArticleWithCommentsResponse article = ArticleWithCommentsResponse.from(articleService.getArticleWithComments(articleId));
 
+//        map.addAttribute("authorization", SecurityContextHolder.getContext().getAuthentication().getAuthorities().stream().findFirst().get().toString());
         map.addAttribute("article", article);
         map.addAttribute("articleComments", article.articleCommentsResponse());
         map.addAttribute("totalCount", articleService.getArticleCount());
