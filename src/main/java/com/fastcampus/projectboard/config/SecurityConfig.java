@@ -30,7 +30,7 @@ public class SecurityConfig {
                                 "/articles/search-hashtag",
                                 PathRequest.toStaticResources().atCommonLocations().toString()
                         ).permitAll()
-                        .anyRequest().permitAll()
+                        .anyRequest().authenticated()
                 )
                 .formLogin(formLogin -> formLogin
                         .loginPage("/login")
