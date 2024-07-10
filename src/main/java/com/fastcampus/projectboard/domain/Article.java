@@ -43,8 +43,18 @@ public class Article extends AuditingFields {
     @Column(nullable = false, length = 10000)
     private String content;
 
+    // 지워야함
     @Setter
     private String hashtag;
+
+//    @ToString.Exclude
+//    @JoinTable(
+//            name = "article_hashtag",
+//            joinColumns = @JoinColumn(name = "articleId"),
+//            inverseJoinColumns = @JoinColumn(name = "hashtagId")
+//    )
+//    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+//    private Set<Hashtag> hashtags = new LinkedHashSet<>();
 
     @ToString.Exclude
     @OrderBy("createdAt DESC")
