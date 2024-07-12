@@ -36,6 +36,8 @@ public class QArticle extends EntityPathBase<Article> {
 
     public final StringPath hashtag = createString("hashtag");
 
+    public final SetPath<Hashtag, QHashtag> hashtags = this.<Hashtag, QHashtag>createSet("hashtags", Hashtag.class, QHashtag.class, PathInits.DIRECT2);
+
     public final NumberPath<Long> id = createNumber("id", Long.class);
 
     //inherited
