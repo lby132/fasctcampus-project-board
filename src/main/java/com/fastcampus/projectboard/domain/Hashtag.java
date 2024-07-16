@@ -1,7 +1,9 @@
 package com.fastcampus.projectboard.domain;
 
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
 import java.util.LinkedHashSet;
 import java.util.Objects;
@@ -15,7 +17,6 @@ import java.util.Set;
         @Index(columnList = "createdBy")
 })
 @Entity
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Hashtag extends AuditingFields {
 
     @Id
@@ -23,12 +24,14 @@ public class Hashtag extends AuditingFields {
     private Long id;
 
     @ToString.Exclude
-    @ManyToMany(mappedBy = "hashtag")
+    @ManyToMany(mappedBy = "hashtags")
     private Set<Article> articles = new LinkedHashSet<>();
 
     @Setter
     @Column(nullable = false)
-    private String hashtagName;
+    private String hashtagName; // 해시태그 이름
+
+    protected Hashtag() {}
 
     private Hashtag(String hashtagName) {
         this.hashtagName = hashtagName;
@@ -47,6 +50,7 @@ public class Hashtag extends AuditingFields {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.getId());
+        return Objects.hash(this.getId());
     }
+
 }
