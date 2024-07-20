@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.params.provider.Arguments.arguments;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.BDDMockito.then;
@@ -25,11 +25,9 @@ import static org.mockito.BDDMockito.then;
 @ExtendWith(MockitoExtension.class)
 class HashtagServiceTest {
 
-    @InjectMocks
-    private HashtagService sut;
+    @InjectMocks private HashtagService sut;
 
-    @Mock
-    private HashtagRepository hashtagRepository;
+    @Mock private HashtagRepository hashtagRepository;
 
     @DisplayName("본문을 파싱하면, 해시태그 이름들을 중복 없이 반환한다.")
     @MethodSource
@@ -104,6 +102,5 @@ class HashtagServiceTest {
         assertThat(hashtags).hasSize(2);
         then(hashtagRepository).should().findByHashtagNameIn(hashtagNames);
     }
-
 
 }
