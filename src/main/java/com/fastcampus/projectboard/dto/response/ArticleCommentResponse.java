@@ -46,6 +46,10 @@ public record ArticleCommentResponse(
         );
     }
 
+    public boolean hasParentComment() {
+        return parentCommentId != null;
+    }
+
     public boolean hashParentComment() {
         return parentCommentId != null;
     }
