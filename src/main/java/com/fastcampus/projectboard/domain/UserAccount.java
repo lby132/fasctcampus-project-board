@@ -8,7 +8,7 @@ import lombok.ToString;
 import java.util.Objects;
 
 @Getter
-@ToString
+@ToString(callSuper = true) // 부모클래스에 있는 필드들도 toString 해준다. 지금으로서는 AuditingFields 안에 있는 필드들을 toString 해줌
 @Table(indexes = {
         @Index(columnList = "email", unique = true),
         @Index(columnList = "createdAt"),
@@ -30,16 +30,22 @@ public class UserAccount extends AuditingFields {
 
     protected UserAccount() {}
 
-    private UserAccount(String userId, String userPassword, String email, String nickname, String memo) {
+    private UserAccount(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
         this.userId = userId;
         this.userPassword = userPassword;
         this.email = email;
         this.nickname = nickname;
         this.memo = memo;
+        this.createdBy = createdBy;
+        this.modifiedAt = createdAt; // 생성될땐 modifiedAt도 같이 생성 되게
     }
 
     public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
-        return new UserAccount(userId, userPassword, email, nickname, memo);
+        return new UserAccount(userId, userPassword, email, nickname, memo, null);
+    }
+
+    public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo, String createdBy) {
+        return new UserAccount(userId, userPassword, email, nickname, memo, createdBy);
     }
 
     @Override
