@@ -38,6 +38,7 @@ public class UserAccount extends AuditingFields {
         this.memo = memo;
         this.createdBy = createdBy;
         this.modifiedAt = createdAt; // 생성될땐 modifiedAt도 같이 생성 되게
+        this.modifiedBy = createdBy;
     }
 
     public static UserAccount of(String userId, String userPassword, String email, String nickname, String memo) {
