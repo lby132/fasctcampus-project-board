@@ -8,6 +8,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.time.LocalDateTime;
 
+/**
+ * <p>
+ * 메인 컨트롤러
+ * </p>
+ * 테스트 중입니다.
+ */
 @Controller
 public class MainController {
 
@@ -16,6 +22,12 @@ public class MainController {
         return "redirect:/articles";
     }
 
+    /**
+     * 댓글 정보를 열람한다.
+     *
+     * @param id 댓글 ID
+     * @return 댓글 응답
+     */
     @ResponseBody
     @GetMapping("/test-rest")
     public ArticleCommentResponse test(Long id) {

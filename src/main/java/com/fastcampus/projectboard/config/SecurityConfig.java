@@ -41,6 +41,8 @@ public class SecurityConfig {
                                 "/",
                                 "/articles",
                                 "/articles/search-hashtag",
+                                "/swagger-ui/**",
+                                "/v3/api-docs/",
                                 PathRequest.toStaticResources().atCommonLocations().toString()
                         ).permitAll()
                         .anyRequest().authenticated()
