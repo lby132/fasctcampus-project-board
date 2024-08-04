@@ -13,7 +13,7 @@ import java.util.Map;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @DisplayName("DTO - Kakao OAuth 2.0 인증 응답 데이터 테스트")
-class KakaoOAuthResponseTest {
+class KakaoOAuth2ResponseTest {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
