@@ -31,6 +31,7 @@ public class ArticleComment extends AuditingFields {
     @JoinColumn(name = "userId")
     private UserAccount userAccount; // 유저 정보 (ID)
 
+    @Setter
     @Column(updatable = false)
     private Long parentCommentId; // 부모 댓글 ID
 
